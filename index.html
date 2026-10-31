@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bandrek Nusantara — Pemesanan Bandrek Premium</title>
+<meta name="description" content="Pesan bandrek susu, bandrek jahe, dan bandrek gula aren premium. Hangat, aromatik, dan dibuat dari bahan pilihan." />
+//fonts.googleapis.com">
+//fonts.gstatic.com" crossorigin>
+//fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6EFE4;
+    --paper:#FDFAF4;
+    --brown:#2A1B10;
+    --coffee:#4A2E1B;
+    --caramel:#8A4F26;
+    --copper:#B87333;
+    --gold:#D9A05B;
+    --muted:#7A6A5B;
+    --line:rgba(42,27,16,.14);
+    --shadow:0 24px 60px rgba(42,27,16,.14);
+    --radius:18px;
+    --max:1200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--brown);
+    font-family:"Inter",system-ui,sans-serif;
+    font-weight:300;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;line-height:1.05}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  a{color:inherit;text-decoration:none}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .container{max-width:var(--max);margin:auto;padding:0 24px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--copper);font-weight:500;
+  }
+  .eyebrow::before{content:"";width:28px;height:1px;background:var(--copper)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    min-height:52px;padding:0 28px;border-radius:999px;
+    background:var(--brown);color:var(--cream);
+    font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+    border:1px solid var(--brown);cursor:pointer;
+    transition:.3s ease;
+  }
+  .btn:hover{background:var(--caramel);border-color:var(--caramel);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--brown)}
+  .btn.ghost:hover{background:var(--brown);color:var(--cream)}
+  .btn.small{min-height:42px;padding:0 20px;font-size:11px}
+
+  header{
+    position:fixed;inset:0 0 auto;z-index:100;
+    background:rgba(246,239,228,.86);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .mark{
+    width:42px;height:42px;border-radius:50%;
+    background:radial-gradient(circle at 30% 25%,var(--gold),var(--caramel) 55%,var(--coffee));
+    display:grid;place-items:center;color:var(--cream);
+    font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;
+  }
+  .brand-name{font-family:"Cormorant Garamond",serif;font-size:23px;font-weight:600;line-height:1}
+  .brand-name small{display:block;font-family:"Inter";font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+  .nav-links{display:flex;gap:32px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+  .nav-links a{position:relative;padding-bottom:5px}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--copper);transition:.3s}
+  .nav-links a:hover::after{width:100%}
+  .nav-actions{display:flex;align-items:center;gap:14px}
+  .cart-btn{
+    position:relative;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--line);background:var(--paper);
+    display:grid;place-items:center;cursor:pointer;
+  }
+  .cart-count{
+    position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;
+    background:var(--copper);color:#fff;font-size:10px;font-weight:600;
+    display:grid;place-items:center;
+  }
+
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:-1}
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(100deg,rgba(26,15,8,.88) 8%,rgba(26,15,8,.55) 48%,rgba(26,15,8,.18));
+  }
+  .hero-inner{
+    width:100%;padding:150px 0 100px;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center;
+    color:var(--cream);
+  }
+  .hero h1{font-size:clamp(54px,7.5vw,110px);margin:24px 0 26px}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero p{max-width:520px;font-size:18px;color:rgba(246,239,228,.78)}
+  .hero-actions{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap}
+  .hero-card{
+    background:rgba(253,250,244,.1);
+    border:1px solid rgba(246,239,228,.2);
+    border-radius:var(--radius);padding:28px;
+    backdrop-filter:blur(10px);
+  }
+  .hero-card img{border-radius:12px;aspect-ratio:4/3;margin-bottom:20px}
+  .hero-card h3{font-size:28px;margin-bottom:8px}
+  .hero-card p{font-size:14px;color:rgba(246,239,228,.72)}
+  .price-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .price{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--gold)}
+
+  section{padding:110px 0}
+  .section-head{max-width:680px;margin-bottom:60px}
+  .section-head h2{font-size:clamp(38px,5vw,68px);margin:18px 0 20px}
+  .section-head p{color:var(--muted)}
+
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  .product{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden;
+    transition:.35s ease;box-shadow:0 10px 30px rgba(42,27,16,.05);
+  }
+  .product:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .product-media{aspect-ratio:4/3;overflow:hidden;position:relative}
+  .product-media img{transition:transform 1s ease}
+  .product:hover .product-media img{transform:scale(1.06)}
+  .badge{
+    position:absolute;top:16px;left:16px;z-index:2;
+    background:rgba(253,250,244,.92);color:var(--coffee);
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    padding:8px 13px;border-radius:999px;
+  }
+  .product-body{padding:26px}
+  .product-body h3{font-size:27px;margin-bottom:8px}
+  .product-body p{font-size:14px;color:var(--muted);min-height:66px}
+  .product-foot{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+  .product-price{font-family:"Cormorant Garamond",serif;font-size:28px;color:var(--caramel)}
+
+  .story{background:var(--brown);color:var(--cream)}
+  .story .eyebrow{color:var(--gold)}
+  .story .eyebrow::before{background:var(--gold)}
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+  .story h2{font-size:clamp(36px,4.6vw,64px);margin:18px 0 24px}
+  .story p{color:rgba(246,239,228,.72);margin-bottom:18px}
+  .story-media{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .story-media img{border-radius:var(--radius);aspect-ratio:3/4}
+  .story-media img:last-child{margin-top:48px}
+
+  .order{background:var(--paper)}
+  .order-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:60px;
+    background:var(--cream);border:1px solid var(--line);
+    border-radius:26px;padding:48px;box-shadow:var(--shadow);
+  }
+  form{display:grid;gap:18px}
+  .field label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .field input,.field select,.field textarea{
+    width:100%;min-height:52px;padding:14px 16px;
+    background:#fff;border:1px solid var(--line);border-radius:12px;outline:none;
+    transition:.25s;
+  }
+  .field textarea{min-height:110px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--copper);box-shadow:0 0 0 4px rgba(184,115,51,.12)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .summary{background:var(--brown);color:var(--cream);border-radius:20px;padding:32px;height:fit-content}
+  .summary h3{font-size:30px;margin-bottom:22px}
+  .summary-line{display:flex;justify-content:space-between;gap:20px;padding:13px 0;border-bottom:1px solid rgba(246,239,228,.15);font-size:14px}
+  .summary-line span:last-child{color:var(--gold)}
+  .summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+  .summary-total strong{font-family:"Cormorant Garamond",serif;font-size:34px;color:var(--gold)}
+  .note{font-size:12px;color:rgba(246,239,228,.6);margin-top:18px}
+
+  .reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .review{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--radius);padding:32px;
+  }
+  .stars{color:var(--copper);letter-spacing:3px;margin-bottom:16px}
+  .review p{font-family:"Cormorant Garamond",serif;font-size:23px;line-height:1.35;margin-bottom:22px}
+  .review-author{font-size:13px;color:var(--muted)}
+
+  .faq-item{border-bottom:1px solid var(--line)}
+  .faq-item summary{
+    cursor:pointer;list-style:none;padding:24px 0;
+    display:flex;justify-content:space-between;gap:24px;
+    font-family:"Cormorant Garamond",serif;font-size:25px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+";color:var(--copper);font-size:28px}
+  .faq-item[open] summary::after{content:"–"}
+  .faq-item p{padding-bottom:24px;color:var(--muted);max-width:760px}
+
+  footer{background:var(--brown);color:rgba(246,239,228,.65);padding:70px 0 30px}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:50px;margin-bottom:50px}
+  footer h4{font-family:"Cormorant Garamond",serif;font-size:24px;color:var(--cream);margin-bottom:16px}
+  footer a{display:block;padding:6px 0;font-size:14px}
+  footer a:hover{color:var(--gold)}
+  .footer-bottom{
+    border-top:1px solid rgba(246,239,228,.14);padding-top:24px;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;
+  }
+
+  .toast{
+    position:fixed;bottom:28px;left:50%;transform:translate(-50%,140%);
+    background:var(--brown);color:var(--cream);padding:16px 24px;border-radius:999px;
+    font-size:13px;z-index:200;box-shadow:var(--shadow);transition:.45s cubic-bezier(.22,.61,.36,1);
+  }
+  .toast.show{transform:translate(-50%,0)}
+
+  @media(max-width:960px){
+    .nav-links{display:none}
+    .hero-inner,.story-grid,.order-grid{grid-template-columns:1fr}
+    .menu-grid,.reviews{grid-template-columns:1fr 1fr}
+    .footer-grid{grid-template-columns:1fr}
+    .story-media img:last-child{margin-top:0}
+  }
+  @media(max-width:620px){
+    section{padding:80px 0}
+    .menu-grid,.reviews,.field-row{grid-template-columns:1fr}
+    .order-grid{padding:24px}
+    .hero-inner{padding:130px 0 80px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#beranda" class="brand">
+      <div class="mark">B</div>
+      <div class="brand-name">Bandrek Nusantara</div>
+    </a>
+    <nav class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#cerita">Cerita</a>
+      <a href="#pesan">Pesan</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="cart-btn" aria-label="Keranjang">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <a href="#pesan" class="btn small">Pesan Sekarang</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="beranda">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=2000&q=80" alt="Secangkir minuman hangat dengan aroma rempah">
+    </div>
+    <div class="container hero-inner">
+      <div>
+        <div class="eyebrow">Bandrek Premium · Dibuat Fresh</div>
+        <h1>Kehangatan Sunda dalam setiap <em>tegukan</em>.</h1>
+        <p>
+          Bandrek susu, jahe, dan gula aren yang diseduh perlahan dari bahan pilihan.
+          Cocok untuk pagi yang sejuk, sore hujan, atau momen berkumpul bersama orang tersayang.
+        </p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn" style="background:var(--gold);border-color:var(--gold);color:var(--brown)">Lihat Menu</a>
+          <a href="#pesan" class="btn" style="background:transparent;border-color:rgba(246,239,228,.45);color:var(--cream)">Pesan Antar</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=1200&q=80" alt="Minuman susu hangat dengan rempah">
+        <h3>Bandrek Susu Aren</h3>
+        <p>Jahe bakar, gula aren cair, susu segar, kayu manis, dan cengkeh. creamy, aromatik, tidak terlalu manis.</p>
+        <div class="price-row">
+          <span class="price">Rp 25.000</span>
+          <button class="btn small" onclick="addToCart('Bandrek Susu Aren', 25000)">Tambah</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Menu Andalan</div>
+        <h2>Pilih bandrek favoritmu.</h2>
+        <p>Semua bandrek diseduh fresh setiap pesanan masuk, menggunakan jahe segar, gula aren asli, dan rempah tanpa pemanis buatan.</p>
+      </div>
+
+      <div class="menu-grid">
+        <article class="product">
+          <div class="product-media">
+            <span class="badge">Best Seller</span>
+            <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=1000&q=80" alt="Bandrek susu aren">
+          </div>
+          <div class="product-body">
+            <h3>Bandrek Susu Aren</h3>
+            <p>Jahe bakar, susu segar, gula aren, kayu manis, dan cengkeh. Lembut, creamy, dan hangat.</p>
+            <div class="product-foot">
+              <span class="product-price">Rp 25.000</span>
+              <button class="btn small ghost" onclick="addToCart('Bandrek Susu Aren', 25000)">Tambah</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-media">
+            <span class="badge">Klasik</span>
+            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80" alt="Bandrek jahe gula aren">
+          </div>
+          <div class="product-body">
+            <h3>Bandrek Jahe Gula Aren</h3>
+            <p>Resep tradisional dengan jahe segar, gula aren, pandan, dan rempah pilihan. Paling cocok saat hujan.</p>
+            <div class="product-foot">
+              <span class="product-price">Rp 20.000</span>
+              <button class="btn small ghost" onclick="addToCart('Bandrek Jahe Gula Aren', 20000)">Tambah</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product">
+          <div class="product-media">
+            <span class="badge">Signature</span>
+            <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1000&q=80" alt="Bandrek kelapa pandan">
+          </div>
+          <div class="product-body">
+            <h3>Bandrek Kelapa Pandan</h3>
+            <p>Santan kelapa, pandan wangi, jahe, dan gula aren. Rich, wangi, dan cocok untuk pecinta bandrek klasik.</p>
+            <div class="product-foot">
+              <span class="product-price">Rp 27.000</span>
+              <button class="btn small ghost" onclick="addToCart('Bandrek Kelapa Pandan', 27000)">Tambah</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="cerita">
+    <div class="container story-grid">
+      <div>
+        <div class="eyebrow">Cerita Kami</div>
+        <h2>Dari dapur keluarga menjadi bandrek premium.</h2>
+        <p>
+          Bandrek Nusantara berawal dari resep keluarga Sunda yang diseduh perlahan di atas kompor kayu.
+          Kami mempertahankan cara tradisionalnya, lalu menyempurnakan kualitas bahan dan penyajian agar
+          tetap hangat, autentik, dan pantas dinikmati setiap hari.
+        </p>
+        <p>
+          Tidak ada sirup instan atau jahe bubuk. Hanya jahe segar, gula aren, santan atau susu berkualitas,
+          serta rempah yang dipilih langsung dari pemasok terpercaya.
+        </p>
+        <a href="#pesan" class="btn" style="background:var(--gold);border-color:var(--gold);color:var(--brown);margin-top:22px">Pesan Sekarang</a>
+      </div>
+      <div class="story-media">
+        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=900&q=80" alt="Jahe dan rempah segar">
+        <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=80" alt="Minuman rempah hangat">
+      </div>
+    </div>
+  </section>
+
+  <section class="order" id="pesan">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Formulir Pemesanan</div>
+        <h2>Pesan bandrek untuk diantar.</h2>
+        <p>Isi detail pesanan Anda. Tim kami akan mengonfirmasi ketersediaan dan estimasi pengantaran melalui WhatsApp.</p>
+      </div>
+
+      <div class="order-grid">
+        <form onsubmit="submitOrder(event)">
+          <div class="field-row">
+            <div class="field">
+              abel for="name">Nama Lengkap</label>
+              <input id="name" type="text" placeholder="Nama Anda" required>
+            </div>
+            <div class="field">
+              abel for="phone">Nomor WhatsApp</label>
+              <input id="phone" type="tel" placeholder="08xxxxxxxxxx" required>
+            </div>
+          </div>
+
+          <div class="field">
+            abel for="menu">Pilih Menu</label>
+            <select id="menuSelect" onchange="updateSummary()">
+              <option value="25000">Bandrek Susu Aren — Rp 25.000</option>
+              <option value="20000">Bandrek Jahe Gula Aren — Rp 20.000</option>
+              <option value="27000">Bandrek Kelapa Pandan — Rp 27.000</option>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              abel for="qty">Jumlah Gelas</label>
+              <input id="qty" type="number" min="1" value="1" onchange="updateSummary()" required>
+            </div>
+            <div class="field">
+              abel for="delivery">Metode</label>
+              <select id="delivery" onchange="updateSummary()">
+                <option value="delivery">Delivery — Rp 10.000</option>
+                <option value="pickup">Ambil Sendiri — Gratis</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            abel for="address">Alamat Pengantaran</label>
+            <textarea id="address" placeholder="Nama jalan, nomor rumah, patokan, dan area pengantaran"></textarea>
+          </div>
+
+          <div class="field">
+            abel for="notes">Catatan</label>
+            <input id="notes" type="text" placeholder="Contoh: kurangi gula, tanpa cengkeh">
+          </div>
+
+          <button type="submit" class="btn">Kirim Pesanan via WhatsApp</button>
+        </form>
+
+        <aside class="summary">
+          <h3>Ringkasan Pesanan</h3>
+          <div class="summary-line"><span>Menu</span><span id="summaryMenu">Bandrek Susu Aren</span></div>
+          <div class="summary-line"><span>Jumlah</span><span id="summaryQty">1 gelas</span></div>
+          <div class="summary-line"><span>Harga Menu</span><span id="summaryItem">Rp 25.000</span></div>
+          <div class="summary-line"><span>Pengantaran</span><span id="summaryDelivery">Rp 10.000</span></div>
+          <div class="summary-total">
+            <span>Total</span>
+            <strong id="summaryTotal">Rp 35.000</strong>
+          </div>
+          <p class="note">Pembayaran dapat dilakukan melalui transfer bank, QRIS, atau tunai saat pesanan diterima.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="ulasan">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Ulasan Pelanggan</div>
+        <h2>Yang membuat pelanggan kembali.</h2>
+      </div>
+      <div class="reviews">
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Bandrek susunya creamy banget tapi tetap terasa jahe dan rempahnya. Porsinya pas dan pengantarannya cepat.”</p>
+          <div class="review-author">Rani P. — Bandung</div>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Bandrek jahe gula aren-nya benar-benar terasa homemade. Manisnya tidak berlebihan, aromanya bikin nagih.”</p>
+          <div class="review-author">Dimas A. — Jakarta</div>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★☆</div>
+          <p>“Bandrek kelapa pandan jadi favorit keluarga. Kemasan rapi dan tetap hangat sampai rumah.”</p>
+          <div class="review-author">Sinta M. — Bogor</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Pertanyaan Umum</div>
+        <h2>Sebelum memesan.</h2>
+      </div>
+
+      <details class="faq-item" open>
+        <summary>Berapa lama proses pembuatan bandrek?</summary>
+        <p>Bandrek diseduh fresh setelah pesanan dikonfirmasi. Estimasi persiapan sekitar 10–15 menit, ditambah waktu pengantaran sesuai lokasi.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Apakah bisa request level jahe dan gula?</summary>
+        <p>Bisa. Tuliskan preferensi Anda pada kolom catatan, misalnya jahe ekstra, kurangi gula, atau tanpa cengkeh.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Apakah tersedia pilihan non-susu?</summary>
+        <p>Ya. Bandrek Kelapa Pandan menggunakan santan kelapa. Untuk Bandrek Susu Aren, Anda dapat meminta penggantian susu sesuai ketersediaan bahan.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Apakah melayani pesanan acara?</summary>
+        <p>Tersedia untuk pesanan dalam jumlah besar, acara kantor, wedding, dan gathering. Hubungi kami minimal satu hari sebelum acara.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Bandrek Nusantara</h4>
+        <p>Bandrek premium yang diseduh fresh dari jahe, gula aren, susu, dan rempah pilihan. Menghadirkan kehangatan tradisi Sunda dalam kemasan modern.</p>
+      </div>
+      <div>
+        <h4>Navigasi</h4>
+        <a href="#menu">Menu</a>
+        <a href="#cerita">Cerita</a>
+        <a href="#pesan">Pesan</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Hubungi Kami</h4>
+        <a href="https://wa.me/6281234567890">WhatsApp: 0812-3456-7890</a>
+        <a href="mailto:hello@bandreknusantara.id">hello@bandreknusantara.id</a>
+        <a href="#">Instagram @bandreknusantara</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bandrek Nusantara. Semua hak dilindungi.</span>
+      <span>Jam operasional: 08.00–21.00 WIB</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Berhasil ditambahkan ke pesanan</div>
+
+<script>
+  const rupiah = n => "Rp " + n.toLocaleString("id-ID");
+  let cart = 0;
+
+  function addToCart(name, price){
+    cart++;
+    document.getElementById("cartCount").textContent = cart;
+    const toast = document.getElementById("toast");
+    toast.textContent = `${name} ditambahkan ke pesanan`;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2200);
+    document.getElementById("menuSelect").value = String(price);
+    document.getElementById("qty").value = cart;
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const select = document.getElementById("menuSelect");
+    const qty = Math.max(1, parseInt(document.getElementById("qty").value || 1));
+    const delivery = document.getElementById("delivery").value === "delivery" ? 10000 : 0;
+    const itemPrice = parseInt(select.value);
+    const total = itemPrice * qty + delivery;
+    const menuName = select.options[select.selectedIndex].text.split(" — ")[0];
+
+    document.getElementById("summaryMenu").textContent = menuName;
+    document.getElementById("summaryQty").textContent = qty + " gelas";
+    document.getElementById("summaryItem").textContent = rupiah(itemPrice * qty);
+    document.getElementById("summaryDelivery").textContent = delivery ? rupiah(delivery) : "Gratis";
+    document.getElementById("summaryTotal").textContent = rupiah(total);
+  }
+
+  function submitOrder(e){
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const menu = document.getElementById("menuSelect");
+    const menuName = menu.options[menu.selectedIndex].text.split(" — ")[0];
+    const qty = document.getElementById("qty").value;
+    const delivery = document.getElementById("delivery");
+    const deliveryName = delivery.options[delivery.selectedIndex].text;
+    const address = document.getElementById("address").value || "-";
+    const notes = document.getElementById("notes").value || "-";
+    const total = document.getElementById("summaryTotal").textContent;
+
+    const message =
+`Halo Bandrek Nusantara, saya ingin memesan:
+
+Nama: ${name}
+WhatsApp: ${phone}
+Menu: ${menuName}
+Jumlah: ${qty} gelas
+Metode: ${deliveryName}
+Alamat: ${address}
+Catatan: ${notes}
+Total: ${total}
+
+Mohon konfirmasi ketersediaan dan estimasi pengantaran. Terima kasih.`;
+
+    window.open("https://wa.me/6281234567890?text=" + encodeURIComponent(message), "_blank");
+  }
+
+  updateSummary();
+</script>
+</body>
+</html>
